@@ -1,10 +1,13 @@
-FROM s390x/ubuntu:18.04 as builder
+FROM s390x/ubuntu:20.04 as builder
 
 ARG VERSION=2032875
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/New_York
 
 ### build pkcs11-proxy ###
 RUN apt-get update \
     && apt-get -y install \
+    tzdata \
     make \
     cmake \
     build-essential \
@@ -13,7 +16,6 @@ RUN apt-get update \
     libseccomp-dev \
     libgflags-dev \
     libgtest-dev \
-    libc++-helpers \
     gcc \
     g++ \
     git \
@@ -27,7 +29,10 @@ RUN git clone https://github.com/SUNET/pkcs11-proxy && \
     make install
 
 
-FROM s390x/ubuntu:18.04
+FROM s390x/ubuntu:20.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/New_York
 
 COPY --from=builder /usr/local/bin/pkcs11-daemon /usr/local/bin/pkcs11-daemon
 COPY --from=builder /usr/local/lib/libpkcs11-proxy.so.0.1 /usr/local/lib/libpkcs11-proxy.so.0.1
@@ -37,6 +42,7 @@ COPY --from=builder /usr/local/lib/libpkcs11-proxy.so /usr/local/lib/libpkcs11-p
 ### install opencryptoki ###
 RUN apt-get update \
     && apt-get -y install \
+    tzdata \
     libtool \
     libssl-dev \
     libseccomp-dev \
