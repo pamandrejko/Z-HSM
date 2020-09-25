@@ -38,7 +38,7 @@ spec:
         HSM: 'installed'
       containers:
       - name: proxy
-        image: us.icr.io/ibp-temp/pkcs11-proxy-opencryptoki:s390x-1.0.0
+        image: hexiaohu/pkcs11-proxy-opencryptoki:s390x-1.0.1
         imagePullPolicy: Always
         ports:
         - containerPort: 2345

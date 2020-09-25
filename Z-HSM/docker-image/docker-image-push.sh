@@ -1,11 +1,10 @@
 #!/bin/bash -ux
 
-DOCKER_HUB=<DOCKER_HUB>
-DOCKER_HUB_ID=<DOCKER_HUB_ID>
-DOCKER_HUB_PWD=<DOCKER_HUB_PWD>
+DOCKER_HUB=<DOCKER_HUB_REPO>
+IMAGE_TAG=s390x-1.0.1
 
-docker tag pkcs11-proxy-opencryptoki:s390x-1.0.0 $DOCKER_HUB/pkcs11-proxy-opencryptoki:s390x-1.0.0
+docker tag pkcs11-proxy-opencryptoki:$IMAGE_TAG $DOCKER_HUB/pkcs11-proxy-opencryptoki:$IMAGE_TAG
 
-docker login -u <DOCKER_HUB_ID> -p <DOCKER_HUB_PWD> $DOCKER_HUB
-docker push $DOCKER_HUB/pkcs11-proxy-opencryptoki:s390x-1.0.0
+docker push $DOCKER_HUB/pkcs11-proxy-opencryptoki:$IMAGE_TAG
+
 
